@@ -1,0 +1,20 @@
+{
+  "name": "HAL-PT",
+  "version": "0.1.0",
+  "description": "Hardware Artificial Life Personal Trainer A GPT-3 Powered Developer Assistant CLI",
+  "type": "module",
+  "scripts": {},
+  "bin": {
+    "hpt": "./src/app.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "ErikZuuring",
+  "license": "MIT",
+  "dependencies": {
+    "boxen": "^7.0.2",
+    "cli-markdown": "^3.0.3",
+    "eslint": "^8.35.0"
+  }
+}
