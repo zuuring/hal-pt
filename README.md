@@ -13,7 +13,7 @@ Before installing, you will need to create an OpenAI Account and [Create an API 
 
 
 ```bash
-npm i hpt -g
+npm install hal-pt -g
 ```
 
 ## Commands

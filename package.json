@@ -1,7 +1,22 @@
 {
-  "name": "HAL-PT",
+  "name": "hal-pt",
   "version": "0.1.0",
   "description": "Hardware Artificial Life Personal Trainer A GPT-3 Powered Developer Assistant CLI",
+  "keywords": [
+    "openai",
+    "openai-api",
+    "machine-learning",
+    "artificial-intelligence",
+    "chatgpt",
+    "chat-gpt",
+    "gpt",
+    "gpt-3",
+    "ai",
+    "node",
+    "nodejs",
+    "cli",
+    "command-line-interface"
+  ],
   "type": "module",
   "scripts": {},
   "bin": {
@@ -12,6 +27,10 @@
   },
   "author": "ErikZuuring",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zuuring/hal-pt.git"
+  },
   "dependencies": {
     "boxen": "^7.0.2",
     "cli-markdown": "^3.0.3",
