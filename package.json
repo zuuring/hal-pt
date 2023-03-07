@@ -1,6 +1,6 @@
 {
   "name": "hal-pt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Hardware Artificial Life Personal Trainer A GPT-3 Powered Developer Assistant CLI",
   "keywords": [
     "openai",
