@@ -1,7 +1,7 @@
 # HAL-PT
 Hardware Artificial Life Personal Trainer - A GPT-3 Powered Developer Assistant CLI
 
-<img width="647" alt="HAL" src="https://user-images.githubusercontent.com/7145746/222790320-ac919f0f-ad65-42de-a2d2-38c54684b5f8.png">
+![halpt](https://user-images.githubusercontent.com/7145746/223463888-8cb27b1d-a076-483d-bc2d-d48e2bc267ff.gif)
 
 ## What is it?
 
@@ -51,7 +51,8 @@ Generate snippets and code on the fly
 Logs are stored to a local `logs.json` file to help you debug info from the response that is not displayed on screen
 
 ## Upcoming Features
-
+- Better prompts for reading package.json
+- Better debugging tools with sync to ChatGPT
 
 ## Contribute
 
