@@ -1,6 +1,6 @@
 {
   "name": "hal-pt",
-  "version": "0.1.1",
+  "version": "0.1.12",
   "description": "Hardware Artificial Life Personal Trainer A GPT-3 Powered Developer Assistant CLI",
   "keywords": [
     "openai",
@@ -9,6 +9,9 @@
     "artificial-intelligence",
     "chatgpt",
     "chat-gpt",
+    "gpt-3.5-turbo",
+    "assitant",
+    "ai debugger",
     "gpt",
     "gpt-3",
     "ai",
