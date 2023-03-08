@@ -3,8 +3,11 @@ import * as fs from "fs";
 import cp from "child_process";
 import { ESLint } from "eslint";
 import * as inspector from "node:inspector";
-import cliMd from "cli-markdown";
+import { marked } from "marked";
+import TerminalRenderer from "marked-terminal";
+import chalk from 'chalk';
 import boxen from "boxen";
+
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { createInterface } from "readline";
@@ -14,6 +17,51 @@ const apiKeyName = "OPENAI_API_KEY";
 const apiKeyUrl = "https://platform.openai.com/account/api-keys";
 const __dirname = getDirname();
 const fsPromises = fs.promises;
+
+marked.setOptions({
+  renderer: new TerminalRenderer({
+  // Colors
+  level: 1,
+  code: chalk.greenBright,
+  blockquote: chalk.gray.italic,
+  html: chalk.gray,
+  heading: chalk.white.bold.bgBlueBright,
+  firstHeading: chalk.white.bold.bgBlueBright,
+  hr: chalk.reset,
+  listitem: chalk.reset,
+  table: chalk.reset,
+  paragraph: chalk.reset,
+  strong: chalk.bold,
+  em: chalk.italic,
+  codespan: chalk.black.bgGreenBright,
+  del: chalk.dim.gray.strikethrough,
+  link: chalk.blue,
+  href: chalk.blue.underline,
+
+  // Formats the bulletpoints and numbers for lists
+  list: function (body, ordered) {/* ... */},
+
+  // Reflow and print-out width
+  width: 80, // only applicable when reflow is true
+  reflowText: false,
+
+  // Should it prefix headers?
+  showSectionPrefix: true,
+
+  // Whether or not to undo marked escaping
+  // of enitities (" -> &quot; etc)
+  unescape: false,
+
+  // Whether or not to show emojis
+  emoji: true,
+
+  // Options passed to cli-table3
+  tableOptions: {},
+
+  // The size of tabs in number of spaces or as tab characters
+  tab: 3 // examples: 4, 2, \t, \t\t
+  })
+});
 
 gptCLI();
 
@@ -50,27 +98,27 @@ async function gptCLI() {
         "A  G P T - 3  P O W E R E D  C L I  D E V E L O P E R  A S S I S T A N T "
       );
       if (!apiKey) {
-        console.log(cliMd("## No OpenAI Key detected! Type `hpt auth` to add your OpenAI API Key"));
+        console.log(marked("## No OpenAI Key detected! Type `hpt auth` to add your OpenAI API Key"));
       }
       if (apiKey) {
         console.log(
-          cliMd(
+          marked(
             "## Type `hpt <prompt>` to ask a question or `hpt help` for more information"
           )
         );
         if (packageExists === true ) {
           const packageContents = fs.readFileSync("package.json", "utf-8", callback);
-          console.log(cliMd("## NodeJS Application detected, HAL-PT has read your package.json"))
+          console.log(marked("## NodeJS Application detected, HAL-PT has read your package.json"))
           savePackage(packageContents)
         }
       }
       // console.log("========== Contents of this application ==========" + packageContents)
       return;
     case "help":
-      console.log(cliMd("## HAL-PT HELP: You can use the following commands"));
-      console.log(cliMd("- `hpt auth` to add your OpenAI API Key"));
-      console.log(cliMd("- `hpt <prompt>` to ask your question related to programming or pasting error codes"));
-      console.log(cliMd("- `hpt debug` to run ESLint on NodeJS applications (WIP)"));
+      console.log(marked("## HAL-PT HELP: You can use the following commands"));
+      console.log(marked("`hpt auth` to add your OpenAI API Key"));
+      console.log(marked("`hpt <prompt>` to ask your question related to programming or pasting error codes"));
+      console.log(marked("`hpt debug` to run ESLint on NodeJS applications"));
       return;
     case "inspect":
       inspector;
@@ -81,7 +129,7 @@ async function gptCLI() {
       const formatter = await eslint.loadFormatter("stylish");
       const resultText = formatter.format(results);
       console.log(resultText);
-      console.log(cliMd("# Need help? Type the error into HAL!"));
+      console.log(marked("# Need help? Type the error into HAL!"));
       return;
     case "auth":
       await promptPlusKey(false);
@@ -99,7 +147,7 @@ async function gptCLI() {
   const result = parseResult(response);
 
   // output to user
-  console.log(cliMd(result));
+  console.log(boxen(marked(result), {title: 'HAL-PT ANSWERS', titleAlignment: 'center', borderStyle: 'double', padding: 2, margin: 2}));
 
   appendLogData(prompt, response);
 }
@@ -140,7 +188,7 @@ async function getApiKey() {
 
 async function promptPlusKey(keySet) {
   const promptDesc = !keySet ? "not set" : "incorrect";
-  console.log(cliMd("## You must add your OpenAI API Key"));
+  console.log(marked("## You must add your OpenAI API Key"));
   const { rl, prompt } = createUserPrompt();
 
   const openDocsResp = await prompt(`Open OpenAI API Key  (y/N)? `);
@@ -159,7 +207,7 @@ async function promptPlusKey(keySet) {
   const secrets = `${apiKeyName}=${apiKey}`;
   await fsPromises.writeFile(`${__dirname}/.env`, secrets, callback);
 
-  return console.log(cliMd("## OpenAI API key added successfully, you may now use `hpt <prompt>` to speak to HAL-PT"));
+  return console.log(marked("## OpenAI API key added successfully, you may now use `hpt <prompt>` to speak to HAL-PT"));
 }
 
 function createUserPrompt() {
@@ -222,7 +270,6 @@ async function openGPTChat(apiKey) {
   const { status, statusText } = response;
   const resp = { status, statusText };
   const data = await response.json();
-  console.log(cliMd("`==== HAL-PT ANSWERS ====`"))
   return { resp, data };
 }
 
